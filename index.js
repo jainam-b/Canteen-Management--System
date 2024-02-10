@@ -1,10 +1,17 @@
-const express=require("express");
-const app=express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+// const adminRouter = require("./routes/admin")
+const userRouter = require("./routes/user");
+const {JWT_SECRET}=require("./config")
 
-app.get("/",function(req,res){
-    res.json({
-        msg:"hii there"
-    })
-})
+// Middleware for parsing request bodies
+app.use(bodyParser.json());
+// app.use("/admin", adminRouter)
+app.use("/user", userRouter)
 
-app.listen(3000);
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+ 
