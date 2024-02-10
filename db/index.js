@@ -17,7 +17,23 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+
+const orderItemSchema = new mongoose.Schema({
+  itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'MenuItem' },
+  quantity: { type: Number, default: 1 }
+}); 
+
+const orderSchema = new mongoose.Schema({
+  customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  items: [orderItemSchema],
+  status: { type: String, enum: ['pending', 'preparing', 'ready', 'completed'], default: 'pending' },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Order= mongoose.model('Order', orderSchema);
+
 const User = mongoose.model('User', userSchema);
 module.exports = {
-  User
+  User,
+  Order
 };
