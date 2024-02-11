@@ -5,60 +5,41 @@ const router = Router();
 const { User } = require("../db");
 const { JWT_SECRET } = require("../config");
 const userMiddleware = require("../middlewares/user");
+const { createAdmin, loginAdmin } = require("../zod/type");
 
 router.post("/signup", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const role = req.body.role;
-  const name = req.body.name;
-  const email = req.body.email;
+  
+  try {
+    // Parse and validate request body against Zod schema
+    const userData = createAdmin.safeParse(req.body);
+     
+    // Create user if validation succeeds
+    const user = User.create({
+       username:userData.data.username,
+       password:userData.data.password,
+       role:userData.data.role,
+       name:userData.data.name,
+       email:userData.data.email
 
-  const user = User.create({
-    username,
-    password,
-    role,
-    name,
-    email,
-  });
-
-  res.json({
-    msg: "Account Created!! ",
-  });
+    });
+    if(userData.success){
+      res.json({
+        msg: "Account Created!!",
+      });
+    }
+   
+  } catch (error) { 
+    // Handle validation errors
+    res.status(400).json({
+      error: "Validation Error",
+       
+    });
+  }
 });
-
-// router.post("/signin", async (req, res) => {
-//   const username = req.body.username;
-//   const password = req.body.password;
-//   const user = await User.findOne({
-//     username,
-//     password,
-//   });
-//   try {
-
-//   if (user) {
-//     const token = jwt.sign(
-//       {
-//         username,
-//       },
-//       JWT_SECRET
-//     );
-//     res.json({
-//       token,
-//     });
-//   } else {
-//     res.status(403).json({
-//       msg: "User Created Successfully!",
-//     });
-//   }
-// } catch (error) {
-//     res.status(404).json({
-//         msg:"Error occured"+error
-//     })
-
-// }
-// });
+ 
 router.post("/signin", async (req, res) => {
   try {
+    const userData = loginAdmin.safeParse(req.body);
     const { username, password } = req.body;
 
     const user = await User.findOne({ username });

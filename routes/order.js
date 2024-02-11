@@ -7,20 +7,53 @@ const { JWT_SECRET } = require("../config");
 const userMiddleware = require("../middlewares/user");
 
 // Create a new order
-router.post("/orders", userMiddleware,async (req, res) => {
-    try {
-      const id= await User.findOne({
-        username:req.username
-      })
-      const userId=(id._id);  
+// router.post("/orders", userMiddleware,async (req, res) => {
+//     try {
+//       const itemId=req.body.items
+//       const id= await User.findOne({
+//         username:req.username
+//       })
+//       const userId=(id._id);  
+//       const order = await Order.create({
+//         customerId:userId
+//       },{
+//         "$push":{
+//           items:itemId
+//         }
+//       });
+//       res.json(order);
+//     } catch (error) {
+//       res.status(500).json({ error: error.message });
+//     }
+//   });
+router.post("/orders", userMiddleware, async (req, res) => {
+  try {
+      // Extract order item IDs from the request body
+      const itemIds = req.body.items;
+      
+      // Find the user based on the username
+      const user = await User.findOne({ username: req.username });
+      
+      // If user not found, return 404
+      if (!user) {
+          return res.status(404).json({ msg: "User not found" });
+      }
+      
+      // Create the order with customer ID and order items
       const order = await Order.create({
-        customerId:userId
+          customerId: user._id,
+          items: itemIds
       });
+      
+      // Return the created order
       res.json(order);
-    } catch (error) {
+  } catch (error) {
+      // Handle errors
       res.status(500).json({ error: error.message });
-    }
-  });
+  }
+});
+
+
   
   // Retrieve all orders
   router.get("/orders", async (req, res) => {
