@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// stroring itemId from menu table and quantity
+// storing  itemId from menu table and quantity
 const orderItemSchema = new mongoose.Schema({
   itemId: { type: mongoose.Schema.Types.ObjectId, ref: "MenuItem" },
   quantity: { type: Number, default: 1 },

@@ -107,7 +107,9 @@ router.post("/orders", userMiddleware, async (req, res) => {
   // Delete a specific order by ID
   router.delete("/orders/:orderId", async (req, res) => {
     try {
-      const order = await Order.findByIdAndDelete(req.params.orderId);
+      const orderId = req.params.orderId;
+      const order = await Order.findByIdAndDelete(orderId);
+      
       if (!order) {
         return res.status(404).json({ msg: "Order not found" });
       }
@@ -115,6 +117,6 @@ router.post("/orders", userMiddleware, async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
-  
+});
+
   module.exports = router;
