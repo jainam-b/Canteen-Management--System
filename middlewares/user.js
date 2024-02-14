@@ -1,4 +1,4 @@
-const { JWT_SECRET } = require("../config");
+const   JWT_SECRET   = process.env.JWT_SECRET
 const jwt = require("jsonwebtoken");
 function userMiddleware(req, res, next) {
   // accessing token from headers and verifying using secret and sending to the route

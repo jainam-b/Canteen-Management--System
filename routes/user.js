@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const router = Router();
 const { User } = require("../db");
-const { JWT_SECRET } = require("../config");
+const   JWT_SECRET   = process.env.JWT_SECRET
 const userMiddleware = require("../middlewares/user");
 const { createAdmin, loginAdmin } = require("../zod/type");
 

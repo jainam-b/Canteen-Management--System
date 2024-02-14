@@ -3,33 +3,42 @@ const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const router = Router();
 const { User,Order } = require("../db");
-const { JWT_SECRET } = require("../config");
+const   JWT_SECRET   = process.env.JWT_SECRET
 const userMiddleware = require("../middlewares/user");
+ 
 
-// Create a new order
-// router.post("/orders", userMiddleware,async (req, res) => {
-//     try {
-//       const itemId=req.body.items
-//       const id= await User.findOne({
-//         username:req.username
-//       })
-//       const userId=(id._id);  
+// router.post("/orders", userMiddleware, async (req, res) => {
+//   try {
+//       // Extract order item IDs from the request body
+//       const itemIds = req.body.items;
+      
+//       // Find the user based on the username
+//       const user = await User.findOne({ username: req.username });
+      
+//       // If user not found, return 404
+//       if (!user) {
+//           return res.status(404).json({ msg: "User not found" });
+//       }
+      
+//       // Create the order with customer ID and order items
 //       const order = await Order.create({
-//         customerId:userId
-//       },{
-//         "$push":{
-//           items:itemId
-//         }
+//           customerId: user._id,
+//           items: itemIds
 //       });
+      
+//       // Return the created order
 //       res.json(order);
-//     } catch (error) {
+//   } catch (error) {
+//       // Handle errors
 //       res.status(500).json({ error: error.message });
-//     }
-//   });
-router.post("/orders", userMiddleware, async (req, res) => {
+//   }
+// });
+
+router.put("/orders", userMiddleware, async (req, res) => {
   try {
-      // Extract order item IDs from the request body
-      const itemIds = req.body.items;
+      // Extract the itemId from the request body
+      const itemId = req.body.itemId;
+      console.log(itemId);
       
       // Find the user based on the username
       const user = await User.findOne({ username: req.username });
@@ -39,13 +48,19 @@ router.post("/orders", userMiddleware, async (req, res) => {
           return res.status(404).json({ msg: "User not found" });
       }
       
-      // Create the order with customer ID and order items
-      const order = await Order.create({
-          customerId: user._id,
-          items: itemIds
-      });
+      // Find the order associated with the user's customerId
+      const order = await Order.findOneAndUpdate(
+          { customerId: user._id },
+          { $push: { items: itemId } },
+          { new: true }
+      );
       
-      // Return the created order
+      // If no order found, return 404
+      if (!order) {
+          return res.status(404).json({ msg: "Order not found" });
+      }
+      
+      // Return the updated order
       res.json(order);
   } catch (error) {
       // Handle errors

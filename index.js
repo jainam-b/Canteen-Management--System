@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const orderRouter = require("./routes/order")
 const userRouter = require("./routes/user");
-const {JWT_SECRET}=require("./config")
+const   JWT_SECRET   = process.env.JWT_SECRET
 
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
