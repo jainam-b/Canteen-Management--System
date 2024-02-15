@@ -64,4 +64,13 @@ router.post("/signin", async (req, res) => {
     });
   }
 });
+router.get("/users", async (req, res) => {
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;
+

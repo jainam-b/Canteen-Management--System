@@ -34,26 +34,30 @@ const userMiddleware = require("../middlewares/user");
 //   }
 // });
 
-router.put("/orders", userMiddleware, async (req, res) => {
+router.post("/orders",   async (req, res) => {
   try {
       // Extract the itemId from the request body
       const itemId = req.body.itemId;
       console.log(itemId);
       
-      // Find the user based on the username
+       
       const user = await User.findOne({ username: req.username });
-      
-      // If user not found, return 404
+
       if (!user) {
           return res.status(404).json({ msg: "User not found" });
       }
       
       // Find the order associated with the user's customerId
-      const order = await Order.findOneAndUpdate(
+      const order = await Order.create(
           { customerId: user._id },
-          { $push: { items: itemId } },
-          { new: true }
+          {
+            "$push":{
+                items: itemId
+            }
+           }
+           
       );
+      console.log()
       
       // If no order found, return 404
       if (!order) {
@@ -68,6 +72,41 @@ router.put("/orders", userMiddleware, async (req, res) => {
   }
 });
 
+router.put("/orders", userMiddleware, async (req, res) => {
+  try {
+      // Extract the itemId from the request body
+      const itemId = req.body.itemId;
+
+      // Find the user based on the username
+      const user = await User.findOne({ username: req.username });
+
+      // If user not found, return 404
+      if (!user) {
+          return res.status(404).json({ msg: "User not found" });
+      }
+
+      // Find the order associated with the user's customerId
+      let order = await Order.findOne({ customerId: user._id });
+
+      // If no order found, create a new order
+      if (!order) {
+          order = await Order.create({
+              customerId: user._id,
+              items: [itemId]
+          });
+      } else {
+          // If order found, update it by appending the new item
+          order.items.push(itemId);
+          await order.save();
+      }
+
+      // Return the updated or newly created order
+      res.json(order);
+  } catch (error) {
+      // Handle errors
+      res.status(500).json({ error: error.message });
+  }
+});
 
   
   // Retrieve all orders
