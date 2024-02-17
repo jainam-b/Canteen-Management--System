@@ -27,10 +27,15 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+ 
+
 // Create a new order or update existing order with additional items
-router.post("/orders", async (req, res, next) => {
+router.post("/orders",userMiddleware, async (req, res, next) => {
   try {
-    const { itemIds, customerId } = req.body;
+    const username= req.username 
+    const customerId= await User.findOne({ username: username }).select("_id");
+    // console.log(customerId)
+    const { itemIds } = req.body;
 
     const existingUser = await User.findById(customerId);
     if (!existingUser) {
@@ -202,15 +207,16 @@ router.delete("/orders/:orderId", async (req, res) => {
 router.get("/orders/:orderId/items", async (req, res) => {
   try {
     const orderId = req.params.orderId;
+    console.log(orderId);
     const order = await Order.findById(orderId).populate({
       path: "items.itemId",
       select: "name description",
     });
-
+    console.log(order);
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
     }
-
+    
     const items = order.items.map((item) => ({
       name: item.itemId.name,
       description: item.itemId.description,
@@ -219,7 +225,8 @@ router.get("/orders/:orderId/items", async (req, res) => {
 
     res.json(items);
   } catch (error) {
-    next(error);
+    // next(error);
+    console.log(error);
   }
 });
 
