@@ -6,96 +6,125 @@ const { User, Order } = require("../db");
 const JWT_SECRET = process.env.JWT_SECRET;
 const userMiddleware = require("../middlewares/user");
 
-
 // Error handling middleware
 const errorHandler = (error, req, res, next) => {
   console.error(error.stack);
   res.status(500).json({ error: "Internal Server Error" });
 };
 
-router.post("/orders", async (req, res) => {
+// Middleware to verify JWT token and attach user data to request
+const authenticateUser = async (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized: Token not provided" });
+  }
   try {
-    const { itemId, customerId } = req.body;
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.username = decoded.username;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: "Unauthorized: Invalid token" });
+  }
+};
+
+// Create a new order or update existing order with additional items
+router.post("/orders", async (req, res, next) => {
+  try {
+    const { itemIds, customerId } = req.body;
 
     const existingUser = await User.findById(customerId);
-
     if (!existingUser) {
-      // If the user doesn't exist, return an error
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Check if there's an existing order for the user
     let existingOrder = await Order.findOne({ customerId });
 
     if (existingOrder) {
-      // If the order exists, check if the item is already in the order
-      const existingItemIndex = existingOrder.items.findIndex((item) =>
-        item.itemId.equals(itemId)
-      );
+      // Check if itemIds is an array or a single ID
+      if (Array.isArray(itemIds)) {
+        for (const itemId of itemIds) {
+          if (!itemId) {
+            return res.status(400).json({ error: "Item ID is missing" });
+          }
 
-      if (existingItemIndex !== -1) {
-        // If the item exists, increase the quantity
-        existingOrder.items[existingItemIndex].quantity += 1;
+          const existingItemIndex = existingOrder.items.findIndex((item) =>
+            item.itemId && item.itemId.equals(itemId)
+          );
+
+          if (existingItemIndex !== -1) {
+            existingOrder.items[existingItemIndex].quantity += 1;
+          } else {
+            existingOrder.items.push({ itemId, quantity: 1 });
+          }
+        }
       } else {
-        // If the item is not in the order, add it with a quantity of 1
-        existingOrder.items.push({ itemId, quantity: 1 });
+        if (!itemIds) {
+          return res.status(400).json({ error: "Item ID is missing" });
+        }
+
+        const existingItemIndex = existingOrder.items.findIndex((item) =>
+          item.itemId && item.itemId.equals(itemIds)
+        );
+
+        if (existingItemIndex !== -1) {
+          existingOrder.items[existingItemIndex].quantity += 1;
+        } else {
+          existingOrder.items.push({ itemId: itemIds, quantity: 1 });
+        }
       }
 
-      // Save the updated order
       existingOrder = await existingOrder.save();
-
-      // Return the updated order
       return res.json(existingOrder);
     }
 
-    // If the order doesn't exist, create a new order
     const order = await Order.create({
       customerId,
-      items: itemId.map((itemId) => ({ itemId })),
+      items: Array.isArray(itemIds)
+        ? itemIds.map((itemId) => ({ itemId, quantity: 1 }))
+        : [{ itemId: itemIds, quantity: 1 }],
     });
 
-    // Return the created order
     res.json(order);
   } catch (error) {
-    // Handle errors
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
-// edit orders endpoint 
-router.put("/orders", userMiddleware, async (req, res) => {
-  try {
-    // Extract the itemId from the request body
-    const itemId = req.body.itemId;
 
-    // Find the user based on the username
+// Update existing order with additional item
+router.put("/orders", authenticateUser, async (req, res) => {
+  try {
+    const { itemId } = req.body;
     const user = await User.findOne({ username: req.username });
 
-    // If user not found, return 404
     if (!user) {
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Find the order associated with the user's customerId
     let order = await Order.findOne({ customerId: user._id });
 
-    // If no order found, create a new order
     if (!order) {
       order = await Order.create({
         customerId: user._id,
         items: [itemId],
       });
     } else {
-      // If order found, update it by appending the new item
-      order.items.push(itemId);
+      const existingItemIndex = order.items.findIndex((item) =>
+        item.itemId.equals(itemId)
+      );
+
+      if (existingItemIndex !== -1) {
+        order.items[existingItemIndex].quantity += 1;
+      } else {
+        order.items.push({ itemId, quantity: 1 });
+      }
+
       await order.save();
     }
 
-    // Return the updated or newly created order
     res.json(order);
   } catch (error) {
-    // Handle errors
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
@@ -105,7 +134,7 @@ router.get("/orders", async (req, res) => {
     const orders = await Order.find();
     res.json(orders);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
@@ -113,13 +142,12 @@ router.get("/orders", async (req, res) => {
 router.get("/orders/:orderId", async (req, res) => {
   try {
     const order = await Order.findById(req.params.orderId);
-
     if (!order) {
-      return res.status(404).json({ msg: "Order not found" });
+      return res.status(404).json({ error: "Order not found" });
     }
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
@@ -130,11 +158,11 @@ router.put("/orders/:orderId", async (req, res) => {
       new: true,
     });
     if (!order) {
-      return res.status(404).json({ msg: "Order not found" });
+      return res.status(404).json({ error: "Order not found" });
     }
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
@@ -147,11 +175,11 @@ router.put("/orders/:orderId/status", async (req, res) => {
       { new: true }
     );
     if (!order) {
-      return res.status(404).json({ msg: "Order not found" });
+      return res.status(404).json({ error: "Order not found" });
     }
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
@@ -162,30 +190,27 @@ router.delete("/orders/:orderId", async (req, res) => {
     const order = await Order.findByIdAndDelete(orderId);
 
     if (!order) {
-      return res.status(404).json({ msg: "Order not found" });
+      return res.status(404).json({ error: "Order not found" });
     }
     res.json({ msg: "Order deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
-// get the details of the menuitems form order table item id 
+// Get the details of the menu items from the order
 router.get("/orders/:orderId/items", async (req, res) => {
   try {
     const orderId = req.params.orderId;
-
-    // Find the order by ID and populate the 'items' field with data from the 'MenuItem' collection
     const order = await Order.findById(orderId).populate({
       path: "items.itemId",
-      select: "name description -_id", // Exclude '_id' from the selection
+      select: "name description",
     });
 
     if (!order) {
-      return res.status(404).json({ msg: "Order not found" });
+      return res.status(404).json({ error: "Order not found" });
     }
 
-    // Extract the name and description of items
     const items = order.items.map((item) => ({
       name: item.itemId.name,
       description: item.itemId.description,
@@ -194,8 +219,11 @@ router.get("/orders/:orderId/items", async (req, res) => {
 
     res.json(items);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
+
+// Error handling middleware
 router.use(errorHandler);
+
 module.exports = router;

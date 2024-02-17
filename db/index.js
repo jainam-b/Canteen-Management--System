@@ -51,11 +51,11 @@ const menuItemSchema = new mongoose.Schema({
 const Menu= mongoose.model('MenuItem', menuItemSchema);
 const Order = mongoose.model("Order", orderSchema);
 const User = mongoose.model("User", userSchema);
-const orderItem = mongoose.model("orderItem", orderItemSchema);
+ 
 
 module.exports = {
   User,
   Order,
   Menu,
-  orderItem
+  
 };
