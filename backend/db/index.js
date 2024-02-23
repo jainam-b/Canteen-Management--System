@@ -6,7 +6,7 @@ mongoose.connect(
 );
  
 // Admin schema {admin to login }
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   username: { type: String },
   password: { type: String},
   role: {
@@ -51,11 +51,11 @@ const menuItemSchema = new mongoose.Schema({
 });
 const Menu= mongoose.model('MenuItem', menuItemSchema);
 const Order = mongoose.model("Order", orderSchema);
-const User = mongoose.model("User", userSchema);
+const Admin = mongoose.model("Admin", adminSchema);
  
 
 module.exports = {
-  User,
+  Admin,
   Order,
   Menu,
   

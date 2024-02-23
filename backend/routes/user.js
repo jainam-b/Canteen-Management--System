@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const router = Router();
-const { User } = require("../db");
+const { Admin } = require("../db");
 const   JWT_SECRET   = process.env.JWT_SECRET
 const userMiddleware = require("../middlewares/user");
 const { createAdmin, loginAdmin } = require("../zod/type");
@@ -14,7 +14,7 @@ router.post("/signup", (req, res) => {
     const userData = createAdmin.safeParse(req.body);
      
     // Create user if validation succeeds
-    const user = User.create({
+    const user = Admin.create({
        username:userData.data.username,
        password:userData.data.password,
        role:userData.data.role,
@@ -42,7 +42,7 @@ router.post("/signin", async (req, res) => {
     const userData = loginAdmin.safeParse(req.body);
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
+    const user = await Admin.findOne({ username });
 
     if (!user) {
       // User not found
@@ -66,7 +66,7 @@ router.post("/signin", async (req, res) => {
 });
 router.get("/users", async (req, res) => {
   try {
-    const user = await User.find();
+    const user = await Admin.find();
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });

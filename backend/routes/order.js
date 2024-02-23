@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const router = Router();
-const { User, Order } = require("../db");
+const { Admin, Order } = require("../db");
 const JWT_SECRET = process.env.JWT_SECRET;
 const userMiddleware = require("../middlewares/user");
 
@@ -33,11 +33,11 @@ const authenticateUser = async (req, res, next) => {
 router.post("/orders",userMiddleware, async (req, res, next) => {
   try {
     const username= req.username 
-    const customerId= await User.findOne({ username: username }).select("_id");
+    const customerId= await Admin.findOne({ username: username }).select("_id");
     // console.log(customerId)
     const { itemIds } = req.body;
 
-    const existingUser = await User.findById(customerId);
+    const existingUser = await Admin.findById(customerId);
     if (!existingUser) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -100,7 +100,7 @@ router.post("/orders",userMiddleware, async (req, res, next) => {
 router.put("/orders", authenticateUser, async (req, res) => {
   try {
     const { itemId } = req.body;
-    const user = await User.findOne({ username: req.username });
+    const user = await Admin.findOne({ username: req.username });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
