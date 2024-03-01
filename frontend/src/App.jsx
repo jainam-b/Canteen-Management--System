@@ -1,50 +1,22 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter , Routes, Router, Route } from "react-router-dom";
+import AddItem from "./Components/AddItem";
+import OrderDetails from "./Components/OrderDetails";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3001/order/orders')
-      .then(function (response) {
-        setData(response.data);
-      })
-      .catch(function (error) {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-let number=1
-  return (
-    <div className="App">
-      <h1>Order Data</h1>
-      {data.length > 0 ? (
-        <ul>
-          {data.map((order) => (
-            <li key={order._id}>
-              <p>Table number: {number++}</p>
-              <p>Order ID: {order._id}</p>
-              <p>Customer ID: {order.customerId}</p>
-              <p>Status: {order.status}</p>
-              <p>Created At: {order.createdAt}</p>
-              <p>Items:</p>
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    Item ID: {item.itemId}
-                    <br />
-                    Quantity: {item.quantity}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
+  return <div>
+ <BrowserRouter>
+         
+        <Routes>
+          <Route path="/add-item" element={<AddItem />}></Route>
+          <Route path="/order-details" element={<OrderDetails />}></Route>
+          {/* <Route path="/" element={<Landing />}></Route>
+          <Route path="/dashboard" element={ <Suspense fallback={"loading ..."}> <Dashboard /></Suspense>}></Route>
+          <Route path="/" element={ <Suspense fallback={"loading ..."}> <Landing /></Suspense>}></Route> */}
+        </Routes>
+      </BrowserRouter>
+  </div>;
 }
 
 export default App;
