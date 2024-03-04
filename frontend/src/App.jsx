@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter , Routes, Router, Route } from "react-router-dom";
 import AddItem from "./Components/AddItem";
 import OrderDetails from "./Components/OrderDetails";
+import Charts from "./Components/Charts";
 
 function App() {
   return <div>
@@ -11,9 +12,8 @@ function App() {
         <Routes>
           <Route path="/add-item" element={<AddItem />}></Route>
           <Route path="/order-details" element={<OrderDetails />}></Route>
-          {/* <Route path="/" element={<Landing />}></Route>
-          <Route path="/dashboard" element={ <Suspense fallback={"loading ..."}> <Dashboard /></Suspense>}></Route>
-          <Route path="/" element={ <Suspense fallback={"loading ..."}> <Landing /></Suspense>}></Route> */}
+          <Route path="/chart" element={<Charts />}></Route>
+           
         </Routes>
       </BrowserRouter>
   </div>;
