@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import  "../style/style.css";
 
 const AddItem = () => {
   const [name, setName] = useState("");
@@ -25,8 +26,10 @@ const AddItem = () => {
 
   return (
     <div>
-      Name:{" "}
+        
+      <div className="text-3xl font-bold underline">Name:{" "}</div>
       <input
+      
         type="text"
         placeholder="Enter Name "
         value={name}
