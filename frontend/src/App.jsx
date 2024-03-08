@@ -5,8 +5,12 @@ import AddItem from "./Components/AddItem";
 import OrderDetails from "./Components/OrderDetails";
 import Charts from "./Components/Charts";
 
+
 function App() {
   return <div>
+ 
+     
+ 
  <BrowserRouter>
          
         <Routes>

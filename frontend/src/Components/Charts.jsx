@@ -27,8 +27,7 @@ const Charts = () => {
 
   return (
     <div>
-    <div id="chart"></div>
-    <div id="dashboard"></div>
+    
     {/* MongoDB Charts embedded using iframe */}
     <iframe
       style={{
