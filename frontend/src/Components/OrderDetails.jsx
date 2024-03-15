@@ -59,7 +59,7 @@ const OrderDetails = () => {
   useEffect(() => {
     // Connect to the Socket.io server
     const socket = io('http://localhost:3000');
-    
+
     socket.on('connect', () => {
         console.log('Connected to Socket.io server');
       });
@@ -67,7 +67,8 @@ const OrderDetails = () => {
     // Listen for 'newOrder' event
     socket.on('newOrder', (order) => {
       // Update orders state with the new order
-      setOrders(prevOrders => [...prevOrders, order]);
+    //   setOrders(prevOrders => [...prevOrders, order]);
+      const order=setOrders("placed");
     });
 
     // Clean up the socket connection when the component unmounts
