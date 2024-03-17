@@ -5,6 +5,9 @@ const router = Router();
 const { Admin, Order } = require("../db");
 const JWT_SECRET = process.env.JWT_SECRET;
 const userMiddleware = require("../middlewares/user");
+ 
+const { Server } = require("socket.io");
+const io = require('socket.io')();
 
 // Error handling middleware
 const errorHandler = (error, req, res, next) => {
@@ -27,6 +30,16 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+
+
+// Listen for 'newOrder' event from the online ordering system
+io.on('connection', (socket) => {
+    socket.on('newOrder', (newOrder) => {
+        // Emit the same 'newOrder' event to all connected clients in the dashboard
+        io.emit('newOrder', newOrder);
+    });
+    console.log("connected");
+});
  
 
 // Create a new order or update existing order with additional items

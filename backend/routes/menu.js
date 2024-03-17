@@ -4,20 +4,21 @@ const router = Router();
 const { Menu } = require("../db");
 // const userMiddleware = require("../middlewares/user");
 
-router.post("/add-item", async (req, res) => {
+router.post("/add-items", async (req, res) => {
   try {
-    const { name, description, price, category } = req.body;
+    const items = req.body; // Assuming req.body is an array of items
 
-    const newItem = await Menu.create({
-      name,
-      description,
-      price,
-      category,
-    });
+    // Validate that req.body is an array
+    if (!Array.isArray(items)) {
+      return res.status(400).json({ message: "Items should be provided as an array" });
+    }
 
-    res.json(newItem);
+    // Insert each item into the database
+    const newItems = await Menu.insertMany(items);
+
+    res.json(newItems);
   } catch (error) {
-    console.error("Error adding menu item:", error);
+    console.error("Error adding menu items:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

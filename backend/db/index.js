@@ -42,12 +42,13 @@ const orderSchema = new mongoose.Schema({
 });
 // menu items 
 const menuItemSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String,   },
   description: String,
-  price: { type: Number, required: true },
-  category: { type: String, enum: ['appetizer', 'main course', 'dessert'], required: true },
+  price: { type: Number,  },
+  category: { type: String, enum: ['appetizer', 'main course', 'dessert'],   },
   available: { type: Boolean, default: true },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  image: String, // Assuming you're storing the URL of the image
 });
 const Menu= mongoose.model('MenuItem', menuItemSchema);
 const Order = mongoose.model("Order", orderSchema);
