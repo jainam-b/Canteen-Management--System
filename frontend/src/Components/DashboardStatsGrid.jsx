@@ -6,17 +6,27 @@ import axios from "axios";
 export default function DashboardStatsGrid() {
 
     const [orderCount, setOrderCount] = useState(null);
+    const [UsersCount, setUsersCount] = useState(null);
     const [totalSales, setTotalSales] = useState(null);
 
     useEffect(() => {
       fetchOrderCount();
       fetchTotalSales();
+      fetchUsersCount();
     }, []);
   
     const fetchOrderCount = async () => {
       try {
         const response = await axios.get("http://localhost:3001/order/count"); // Assuming your backend API is served at /api
         setOrderCount(response.data.count);
+      } catch (error) {
+        console.error("Error fetching order count:", error);
+      }
+    };
+    const fetchUsersCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/user/count"); // Assuming your backend API is served at /api
+        setUsersCount(response.data.count);
       } catch (error) {
         console.error("Error fetching order count:", error);
       }
@@ -62,8 +72,8 @@ export default function DashboardStatsGrid() {
         <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">Total Customers</span>
             <div className="flex items-center">
-                <strong className="text-xl text-gray-700 font-semibold">12313</strong>
-                <span className="text-sm text-red-500 pl-2">-30</span>
+                <strong className="text-xl text-gray-700 font-semibold">{UsersCount}</strong>
+                {/* <span className="text-sm text-red-500 pl-2">-30</span> */}
             </div>
         </div>
     </BoxWrapper>

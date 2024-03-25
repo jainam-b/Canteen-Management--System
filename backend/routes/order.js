@@ -272,6 +272,37 @@ router.get('/total-price', async (req, res) => {
 });
 
 
+
+// Define API endpoint to fetch aggregated data based on order categories
+router.get('/categories', async (req, res) => {
+  try {
+      const data = await Order.aggregate([
+          { $unwind: '$items' }, // Deconstruct the items array
+          {
+              $lookup: { // Join with MenuItem collection to get category information
+                  from: 'menuitems',
+                  localField: 'items.itemId',
+                  foreignField: '_id',
+                  as: 'menuItem'
+              }
+          },
+          { $unwind: '$menuItem' }, // Deconstruct the menuItem array
+          {
+              $group: { // Group by category and count the total orders in each category
+                  _id: '$menuItem.category',
+                  totalOrders: { $sum: 1 }
+              }
+          }
+      ]);
+
+      res.json(data);
+  } catch (error) {
+      console.error('Error fetching aggregated data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+
 // Error handling middleware
 router.use(errorHandler);
 

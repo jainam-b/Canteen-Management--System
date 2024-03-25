@@ -2,10 +2,11 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const router = Router();
-const { Admin } = require("../db");
+const { Admin,Users } = require("../db");
 const   JWT_SECRET   = process.env.JWT_SECRET
 const userMiddleware = require("../middlewares/user");
 const { createAdmin, loginAdmin } = require("../zod/type");
+
 
 router.post("/signup", (req, res) => {
   
@@ -70,6 +71,18 @@ router.get("/users", async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+
+// calculate total users 
+router.get("/count", async (req, res) => {
+  try {
+    const count = await Users.countDocuments();
+    res.json({ count: count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 module.exports = router;

@@ -51,14 +51,43 @@ const menuItemSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   image: String, // Assuming you're storing the URL of the image
 });
+
+
+
+
+// customers
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+
 const Menu= mongoose.model('MenuItem', menuItemSchema);
 const Order = mongoose.model("Order", orderSchema);
 const Admin = mongoose.model("Admin", adminSchema);
+const Users = mongoose.model("Users", userSchema);
  
+
 
 module.exports = {
   Admin,
   Order,
   Menu,
+  Users
   
 };
