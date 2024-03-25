@@ -84,6 +84,9 @@ const OrderDetails = () => {
           {orders.map((order, index) => (
             <li key={index}>
               <p>Order ID: {order._id}</p>
+              <p>Customer Name: {order.customerName}</p>
+              <p>Total Amount: {order.totalAmount}</p>
+              <p>Order Date: {order.orderDate}</p>
               {/* Add more order details as needed */}
             </li>
           ))}
@@ -93,5 +96,5 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+
 

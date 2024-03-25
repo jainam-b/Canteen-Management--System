@@ -31,7 +31,7 @@ const AddItem = () => {
       <input
       
         type="text"
-        placeholder="Enter Name "
+        placeholder="Enter  item Name "
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
