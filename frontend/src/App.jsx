@@ -8,6 +8,7 @@ import Dashboard from './Components/Dashboard';
 import ProductTable from './Components/ProductTable';
 import "./App.css";
 import Orders from "./Components/Orders";
+import Try from "./Components/Try";
 // import Login from "./Components/Login/Login";
 // import Signup from "./Components/Signup/Signup";
 
@@ -19,10 +20,12 @@ function App(){
 
     <BrowserRouter>
       <Routes>
+          <Route path='try' element={<Try/>} />
         <Route path="/" element={<Layout/>}>
           <Route index element={<Dashboard />} />
           <Route path='ProductTable' element={<ProductTable/>} />
-          <Route path='orders' element={<Orders  />} />
+          {/* <Route path='orders' element={<Orders  />} /> */}
+
         {/* <Route path='Login' element={<Login  />} />
         <Route path='Signup' element={<Signup  />} /> */}
         </Route>

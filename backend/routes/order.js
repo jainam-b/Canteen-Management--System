@@ -243,6 +243,35 @@ router.get("/orders/:orderId/items", async (req, res) => {
   }
 });
 
+// backend/routes/orders.js
+router.get("/count", async (req, res) => {
+  try {
+    const orderCount = await Order.countDocuments();
+    res.json({ count: orderCount });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+ 
+router.get('/total-price', async (req, res) => {
+  try {
+      // Retrieve all orders from the database
+      const orders = await Order.find();
+      
+      // Calculate the total price by summing up the totalPrice field of each order
+      const totalPrice = orders.reduce((acc, order) => acc + order.totalPrice, 0);
+      
+      // Send the total price as the response
+      res.json({ totalPrice });
+  } catch (error) {
+      console.error('Error calculating total price:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Error handling middleware
 router.use(errorHandler);
 
