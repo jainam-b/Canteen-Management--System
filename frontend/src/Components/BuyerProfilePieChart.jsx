@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import axios from 'axios'
 
-const COLORS = ['#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#00C49F', '#FFBB28', '#FF8042']
 
 export default function BuyerProfilePieChart() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([])
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData()
+    }, [])
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/order/categories');
-            setData(response.data);
+            const response = await axios.get('http://localhost:3001/order/categories')
+            setData(response.data)
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error)
         }
-    };
+    }
 
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-        const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+        const x = cx + radius * Math.cos((-midAngle * Math.PI) / 180)
+        const y = cy + radius * Math.sin((-midAngle * Math.PI) / 180)
 
         return (
             <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
                 {`${(percent * 100).toFixed(0)}%`}
             </text>
-        );
-    };
+        )
+    }
 
     return (
         <div className="w-[25rem] h-[20rem] bg-white p-2 rounded-sm border border-gray-200 flex flex-col">
@@ -55,16 +55,19 @@ export default function BuyerProfilePieChart() {
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-            <div className="flex justify-center" style={{marginTop:"-10%"}}>
+            <div className="flex justify-center" style={{ marginTop: '-10%' }}>
                 <ul className="flex gap-4">
                     {data.map((entry, index) => (
                         <li key={`legend-${index}`} className="flex items-center">
-                            <div className={`w-4 h-4 mr-1 rounded-full`} style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
+                            <div
+                                className={`w-4 h-4 mr-1 rounded-full`}
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                            ></div>
                             <span>{entry._id}</span>
                         </li>
                     ))}
                 </ul>
             </div>
         </div>
-    );
+    )
 }

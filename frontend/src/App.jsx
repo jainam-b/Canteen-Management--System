@@ -9,6 +9,7 @@ import ProductTable from './Components/ProductTable';
 import "./App.css";
 import Orders from "./Components/Orders";
 import Try from "./Components/Try";
+import OrderDetails from "./Components/OrderDetails";
 // import Login from "./Components/Login/Login";
 // import Signup from "./Components/Signup/Signup";
 
@@ -24,7 +25,7 @@ function App(){
         <Route path="/" element={<Layout/>}>
           <Route index element={<Dashboard />} />
           <Route path='ProductTable' element={<ProductTable/>} />
-          {/* <Route path='orders' element={<Orders  />} /> */}
+          <Route path='orders' element={<OrderDetails  />} />
 
         {/* <Route path='Login' element={<Login  />} />
         <Route path='Signup' element={<Signup  />} /> */}
