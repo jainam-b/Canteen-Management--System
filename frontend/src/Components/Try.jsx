@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import axios from 'axios';
 
 const COLORS = ['#00C49F', '#FFBB28', '#FF8042'];
@@ -52,18 +52,9 @@ export default function BuyerProfilePieChart() {
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
+                        <Legend />
                     </PieChart>
                 </ResponsiveContainer>
-            </div>
-            <div className="flex justify-center" style={{marginTop:"-10%"}}>
-                <ul className="flex gap-4">
-                    {data.map((entry, index) => (
-                        <li key={`legend-${index}`} className="flex items-center">
-                            <div className={`w-4 h-4 mr-1 rounded-full`} style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                            <span>{entry._id}</span>
-                        </li>
-                    ))}
-                </ul>
             </div>
         </div>
     );
