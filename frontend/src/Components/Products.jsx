@@ -71,7 +71,7 @@
 // Actual Product Page
 
 import React from 'react';
-import AddProductForm from './Productform'
+import MyModal from './Productform'
 
 const ProductTable = () => {
   return (
