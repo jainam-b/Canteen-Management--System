@@ -41,6 +41,7 @@ export default function DashboardStatsGrid() {
       }
     };
   return (
+    <div style={{marginTop:"10px"}}>
     <div className="flex gap-4">
     <BoxWrapper>
         <div className="rounded-full h-12 w-12 flex items-center justify-center bg-sky-500">
@@ -84,11 +85,12 @@ export default function DashboardStatsGrid() {
         <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">Total Orders</span>
             <div className="flex items-center">
-                <strong className="text-xl text-gray-700 font-semibold">16432</strong>
+                <strong className="text-xl text-gray-700 font-semibold">{orderCount}</strong>
                 <span className="text-sm text-green-500 pl-2">+43</span>
             </div>
         </div>
     </BoxWrapper>
+</div>
 </div>
 )
 }
