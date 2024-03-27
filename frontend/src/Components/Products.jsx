@@ -71,6 +71,7 @@
 // Actual Product Page
 
 import React from 'react';
+import AddProductForm from './Productform'
 
 const ProductTable = () => {
   return (
@@ -78,9 +79,7 @@ const ProductTable = () => {
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-2xl font-bold">Products</h1>
         <div className="flex items-center">
-          {/* <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2">Export</button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2">Import</button> */}
-          <button className="bg-black text-white px-4 py-2 rounded">+ Add Product</button>
+          <button className="bg-black text-white px-4 py-2 rounded">+Add Products</button>
         </div>
       </div>
 

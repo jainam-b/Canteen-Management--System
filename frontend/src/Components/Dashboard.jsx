@@ -1,7 +1,6 @@
 import React from "react";
 import DashboardStatsGrid from './DashboardStatsGrid'
 import RecentOrders from './RecentOrders'
-// import PopularProducts from './PopularProducts'
 import BuyerProfilePieChart from './BuyerProfilePieChart'
 import TransactionChart from './TransactionChart'
 export default function Dashboard(){
@@ -14,7 +13,6 @@ export default function Dashboard(){
 			</div>
 			<div className="flex flex-row gap-4 w-full">
 				<RecentOrders />
-				{/* <PopularProducts /> */}
 			</div>
 		</div>
     )
