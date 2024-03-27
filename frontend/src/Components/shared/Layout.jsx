@@ -6,7 +6,9 @@ import Header from "./Header"
 
 export default function Layout(){
     return(
-        <div className="flex flex-row bg-neutral-100 w-100 h-screen overflow -hidden">
+
+        <div className="flex flex-row bg-neutral-100 100wh h-screen  overflow -hidden">
+
             <Sidebar></Sidebar>
             <div className="flex-1">
                 <Header/>
