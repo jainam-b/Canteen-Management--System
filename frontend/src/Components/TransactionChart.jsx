@@ -54,13 +54,13 @@ const data = [
 
 export default function TransactionChart() {
 	return (
-		<div className="h-[20rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
+		<div className="w-[40rem] h-[25rem] bg-white p-3 rounded-sm border border-gray-200 flex flex-col flex-100%">
 			<strong className="text-gray-700 font-medium">Transactions</strong>
 			<div className="mt-3 w-100% flex-1 text-xs">
 				<ResponsiveContainer width="100%" height="100%">
 					<BarChart
-						width={300}
-						height={300}
+						width={250}
+						height={250}
 						data={data}
 						margin={{
 							top: 20,

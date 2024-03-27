@@ -4,6 +4,7 @@ import {
 	HiOutlineShoppingCart,
 	HiChartBar,HiOutlineLogout
 } from 'react-icons/hi'
+import { FaUsers } from "react-icons/fa";
 
 export const DASHBOARD_SIDEBAR_LINKS= [
 	{
@@ -23,7 +24,12 @@ export const DASHBOARD_SIDEBAR_LINKS= [
 		label: 'Orders',
 		path: '/orders',
 		icon: <HiOutlineShoppingCart />
-	},
+	},{
+		key: 'members',
+		label: 'Members',
+		path: '/members',
+		icon: <FaUsers />
+},
 	{
 		key: 'analytics',
 		label: 'Analytics',
