@@ -23,4 +23,16 @@ router.post("/add-items", async (req, res) => {
   }
 });
 
+
+router.get("/get-items", async (req, res) => {
+  try {
+    const items = await Menu.find();
+
+    res.json({ items: items });
+  } catch (error) {
+    console.error("Error fetching menu items:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+})
+
 module.exports = router;

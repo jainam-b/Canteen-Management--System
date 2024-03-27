@@ -41,6 +41,7 @@ export default function DashboardStatsGrid() {
       }
     };
   return (
+    <div className='mt-5 ml-4 mr-3'>
     <div className="flex gap-4">
     <BoxWrapper>
         <div className="rounded-full h-12 w-12 flex items-center justify-center bg-sky-500">
