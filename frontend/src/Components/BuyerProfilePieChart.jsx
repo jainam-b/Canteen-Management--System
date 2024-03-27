@@ -33,10 +33,10 @@ export default function BuyerProfilePieChart() {
     }
 
     return (
-        <div className="w-[25rem] h-[20rem] bg-white p-2 rounded-sm border border-gray-200 flex flex-col">
+        <div className="w-[25rem] h-[25rem] bg-white p-2 rounded-sm border border-gray-200 flex flex-col">
             <strong className="text-gray-700 font-medium">Customer Orders by Category</strong>
-            <div className="mt-1 w-full flex-1 text-xs">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="mt-1 w-full flex-1 text-s">
+                <ResponsiveContainer width="94%" height="94%">
                     <PieChart width={400} height={300}>
                         <Pie
                             data={data}
@@ -55,8 +55,8 @@ export default function BuyerProfilePieChart() {
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-            <div className="flex justify-center" style={{ marginTop: '-10%' }}>
-                <ul className="flex gap-4">
+            <div className="flex justify-center" style={{ marginTop: '-5%' }}>
+                <ul className="flex gap-3">
                     {data.map((entry, index) => (
                         <li key={`legend-${index}`} className="flex items-center">
                             <div

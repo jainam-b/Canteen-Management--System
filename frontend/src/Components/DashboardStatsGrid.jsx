@@ -41,7 +41,6 @@ export default function DashboardStatsGrid() {
       }
     };
   return (
-    <div style={{marginTop:"10px"}}>
     <div className="flex gap-4">
     <BoxWrapper>
         <div className="rounded-full h-12 w-12 flex items-center justify-center bg-sky-500">
