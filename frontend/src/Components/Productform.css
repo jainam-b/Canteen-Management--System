@@ -12,15 +12,15 @@
 
 .modalContainer {
     background-color: #fff;
-    padding: 20px;
+    padding: 15px;
     border-radius: 4px;
-    width: 80%;
-    max-width: 500px;
+    width: 75%; 
+    max-width: 400px;
 }
 .titlecloseBtn {
     display: flex;
-    justify-content: end;
     width: 100%;
+    align-items: center;
   }
 
   .titlecloseBtn button {
@@ -33,18 +33,18 @@
     justify-content: end;
   }
   .modalContainer .title {
-    display: inline-block;
     text-align: center;
-    margin-top: 8px;
+    margin-top: 4px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 20px;
+    justify-content: center;
   }
+
   .modalContainer .body {
     flex: 50%;
     justify-content:left;
     align-items: last baseline;
     font-size: 1.2rem;
-    /* text-align: center; */
   }
   .modalContainer .footer {
     flex: 20%;
@@ -53,16 +53,15 @@
     align-items: center;
   }
   .modalContainer .footer button {
-    width: 100px;
-    height: 25px;
-    margin: 5px;
+    width: 120px;
+    height: 30px;
+    margin: 8px;
     border: none;
     background-color: black;
     color: white;
     border-radius: 8px;
     font-size: 15px;
     cursor: pointer;
-    display: flex;
     justify-content: center;
   }
 

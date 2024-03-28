@@ -36,11 +36,13 @@ const RecentOrders = () => {
                   <div className="text-blue-600">BKASH</div>
                 </td>
                 <td className="border-t">Paid</td>
+                <td className="border-t">
                 <div className="flex space-x-2">
                     <button className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md">
                     Order History
                     </button>
                   </div>
+                  </td>
               </tr>
               {/* <!--- Add more rows based on the sample above --> */}
             </tbody>

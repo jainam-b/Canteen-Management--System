@@ -13,17 +13,16 @@ export default function Modal ({closeModal}) {
                 <br />
             </div>
             <div className='body'>
-                <input type="text" placeholder="Product Name" className="p-2 border rounded-md"/>
-                <input type="text" placeholder="Description" className="p-2 border rounded-md"/>
-                
-                <input type="text" placeholder="Image URL" className="p-2 border rounded-md"/>
-                <select placeholder="Category" className='p-2 border rounded-md'>
+                 Product Name: <input type="text" placeholder="Product Name" className="p-2 border rounded-md"/><br />
+                 Product Description: <input type="text" placeholder="Description" className="p-2 border rounded-md mt-3"/><br />
+                 Product Image: <input type="text" placeholder="Image URL" className="p-2 border rounded-md mt-4"/> <br />
+                Category: <select placeholder="Category" className='p-2 border rounded-md mt-3'>
                 <option>Category 1</option>
                 <option>Category 2</option>
                 <option>Category 3</option>
                 <option>Category 4</option>
-                </select>
-                <input type='number' placeholder='Sale Price' className='col-span-full p-2 border rounded-md'/>
+                </select> <br />
+                Sale Price: <input type='number' placeholder='Sale Price' className='col-span-full p-2 border rounded-md mt-3'/>
             </div>
             <div className='footer justify-end'>
                 <button>Add Product</button>
