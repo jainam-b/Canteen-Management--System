@@ -9,8 +9,8 @@ const linkClass ='flex items-center gap-2 font-light px-3 py-2 hover:bg-stone-50
 
 export default function Sidebar() {
   return (
-    <div className=' bg-orange-500 w-100px h-900px p-4 flex flex-col text-black bold rounded-r-lg items-center'>
-        <div className=' flex items-center gap-2  px-1 py-1.5'>
+    <div className=' bg-red-600 w-60px h-100dvh p-4 flex flex-col text-black bold rounded-r-lg items-start  '>
+        <div className=' flex items-center gap-2  px-1 py-1.5 '>
             <FcComboChart  fontSize={35}/>
             <br />
             <a href="/" className='text-Black-800 text-lg font-size-35 font-semibold'> Dashboard</a>
