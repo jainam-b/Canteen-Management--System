@@ -13,7 +13,7 @@ export default function Modal({ closeModal }) {
         e.preventDefault()
         try {
             const response = await axios.post('http://localhost:3001/menu/add-items', {
-                productName,
+                name :productName,
                 description,
                 imageUrl,
                 category,

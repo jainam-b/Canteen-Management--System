@@ -9,19 +9,18 @@ const zod = require("zod");
 
 
 // Used for signup
-const createAdmin = zod.object({
-  username: zod.string(),
-  password: zod.string().min(8),
-  role: zod.string(),
-  name: zod.string(),
+const signupSchema = zod.object({
+  username: zod.string().min(3).max(30),
   email: zod.string().email(),
+  password: zod.string().min(8),
 });
+
 const loginAdmin = zod.object({
-  username: zod.string(),
+  email: zod.string().email(),
   password: zod.string().min(8),
    
 });
 module.exports={
-    createAdmin,
+  signupSchema,
     loginAdmin
 }

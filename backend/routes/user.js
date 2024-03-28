@@ -1,3 +1,4 @@
+ 
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
@@ -5,7 +6,7 @@ const router = Router();
 const { Admin, Users } = require("../db");
 const JWT_SECRET = process.env.JWT_SECRET;
 const userMiddleware = require("../middlewares/user");
-const { createAdmin, loginAdmin } = require("../zod/type");
+const { signupSchema, loginAdmin } = require("../zod/type");
 
 // router.post("/signup", (req, res) => {
 //   try {
@@ -37,7 +38,7 @@ const { createAdmin, loginAdmin } = require("../zod/type");
 // Define the signup route
 router.post("/signup", async (req, res) => {
   try {
-    const { username, email, password } = req.body; // Extract user data from request body
+    const { username, email, password } = signupSchema.parse(req.body);
 
     // Create user
     const newUser = await Admin.create({

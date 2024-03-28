@@ -15,10 +15,17 @@ const Signup = () => {
     navigate(path);
   };
 
-  const handleSignUp = () => {
-    // Perform signup action
-    signUp({ username: name, email, password });
-    handlenavigatelogin()
+  
+  const handleSignUp = async () => {
+    try {
+      // Perform signup action
+      await signUp({ username: name, email, password });
+      // If signup succeeds, navigate to login page
+      handlenavigatelogin();
+    } catch (error) {
+      // If signup fails, set error message
+      setError(error.message || 'An error occurred during signup');
+    }
   };
 
   const handleLogin = () => {
