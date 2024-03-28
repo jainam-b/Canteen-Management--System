@@ -4,21 +4,41 @@ const router = Router();
 const { Menu,Order } = require("../db");
 // const userMiddleware = require("../middlewares/user");
 
+// router.post("/add-items", async (req, res) => {
+//   try {
+//     const items = req.body; // Assuming req.body is an array of items
+
+//     // Validate that req.body is an array
+//     if (!Array.isArray(items)) {
+//       return res.status(400).json({ message: "Items should be provided as an array" });
+//     }
+
+//     // Insert each item into the database
+//     const newItems = await Menu.insertMany(items);
+
+//     res.json(newItems);
+//   } catch (error) {
+//     console.error("Error adding menu items:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
+
 router.post("/add-items", async (req, res) => {
   try {
-    const items = req.body; // Assuming req.body is an array of items
+    const { name, description, image, category, salePrice } = req.body;
 
-    // Validate that req.body is an array
-    if (!Array.isArray(items)) {
-      return res.status(400).json({ message: "Items should be provided as an array" });
-    }
+    // Create a new product
+    const newProduct = await Menu.create({
+      name,
+      description,
+      image,
+      category,
+      salePrice
+    });
 
-    // Insert each item into the database
-    const newItems = await Menu.insertMany(items);
-
-    res.json(newItems);
+    res.status(201).json(newProduct);
   } catch (error) {
-    console.error("Error adding menu items:", error);
+    console.error("Error adding product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

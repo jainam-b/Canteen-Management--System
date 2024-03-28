@@ -14,7 +14,7 @@ const adminSchema = new mongoose.Schema({
     enum: ["customer", "staff", "admin"],
     default: "staff",
   },
-  name: String,
+ 
   email: String,
 
   createdAt: { type: Date, default: Date.now },
@@ -46,7 +46,7 @@ const menuItemSchema = new mongoose.Schema({
   name: { type: String,   },
   description: String,
   price: { type: Number,  },
-  category: { type: String, enum: ['appetizer', 'main course', 'dessert'],   },
+  category: { type: String, enum: ['appetizer', 'main course', 'dessert'],  default: 'main course'},
   available: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   image: String, // Assuming you're storing the URL of the image
