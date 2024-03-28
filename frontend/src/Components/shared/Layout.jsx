@@ -10,7 +10,7 @@ export default function Layout() {
       <div className="flex-1 overflow-y-auto">
         <Header />
         <div className="p-4">
-          {/* Use p-4 to add some padding around the content */}
+            
           <Outlet />
         </div>
       </div>

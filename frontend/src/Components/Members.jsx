@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Modal1 from './AddMembers'
+import { Outlet } from "react-router-dom"
+import Sidebar from './shared/Sidebar'
+import Header from './shared/Header'
+
 const TeamMember = () => {
   
   const [openModal,setOpenModal]=useState(false)
@@ -7,6 +11,13 @@ const TeamMember = () => {
   
   
   return (
+    <div className="flex flex-row bg-neutral-100 h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex-1 overflow-y-auto">
+        <Header />
+      <div className="p-1">	  
+    < Outlet />
+    </div>
     <div className="p-4 bg-white shadow rounded-md">
       <div className="flex items-center justify-between mb-2">
         <button className="bg-black text-white px-4 py-2 rounded" onClick={() => {setOpenModal(true);}} >+ Add member</button>
@@ -42,6 +53,8 @@ const TeamMember = () => {
           </tr>
         </tbody>
       </table>
+    </div>
+    </div>
     </div>
   );
 };
