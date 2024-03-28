@@ -1,35 +1,31 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from './Components/Dashboard';
 import "./App.css";
 import ProductPage from "./Components/Products";
 import OrderDetails from "./Components/OrderDetails";
-import TeamMembers from "./Components/Members"
-// import Login from "./Components/Login/Login";
-// import Signup from "./Components/Signup/Signup";
-// import { ModalProvider } from "./Components/Context/ModalContext";
-import AdminProfile from './Components/yourprofile'
+// import Login from "./Components/Login";
+import Signup from "./Components/signup";
+import AdminProfile from './Components/yourprofile';
+import TeamMembers from './Components/Members'
+import { ProductProvider } from './Components/ViewDetailModal/DetailContext'
 
-
-
-function App(){
-  return(
+function App() {
+  return (
+    <ProductProvider>
     <BrowserRouter>
       <Routes>
-          <Route path='try' element={<Try/>} />
-        <Route path="/" element={<Layout/>}>
-          <Route index element={<Dashboard />} />
-          <Route path='orders' element={<OrderDetails  />} />
-          <Route path='products' element={<ProductPage  />} />
-          <Route path='members' element={<TeamMembers  />} />
-          <Route path='yourprofile' element={<AdminProfile  />} />
-
-        {/* <Route path='Login' element={<Login  />} />
-        <Route path='Signup' element={<Signup  />} /> */}
-        </Route>
-    </Routes>
-  </BrowserRouter>
-  )
+      <Route path="/" element={<Signup />} />
+        {/* <Route path="/login" element={<Login />} />   */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orders" element={<OrderDetails />} />
+        <Route path="/products" element={<ProductPage />} />
+        <Route path="/members" element={<TeamMembers />} />
+        <Route path="/yourprofile" element={<AdminProfile />} />
+      </Routes>
+    </BrowserRouter>
+    </ProductProvider>
+  );
 }
 
 export default App;
