@@ -185,7 +185,7 @@ router.put("/orders/:orderId", async (req, res) => {
 });
 
 // Update the status of a specific order by ID
-router.put("/orders/:orderId/status", async (req, res) => {
+router.put("/orders/:orderId", async (req, res) => {
   try {
     const order = await Order.findByIdAndUpdate(
       req.params.orderId,

@@ -30,26 +30,60 @@ const RecentOrders = () => {
     return groupedOrders;
   };
 
+  const handleStatus = async (statusType) => {
+    console.log(statusType);
+    try {
+      const response = await axios.get(`http://localhost:3001/api/filter/${statusType}`);
+      setOrders(response.data)
+      console.log(response.data);
+      // Handle the response data as needed
+    } catch (error) {
+      console.error(`Error fetching ${statusType} orders:`, error);
+    }
+  };
+
+  // Function to handle status button click
+  const handleChangeStatus = async (orderId) => {
+   console.log(orderId);
+    try {
+      const response = await axios.put(`http://localhost:3001/order/orders/${orderId}`, {
+        status: 'completed'
+      });
+      const updatedOrder = response.data;
+      // Update the orders state to reflect the updated order
+      setOrders(prevOrders => {
+        return prevOrders.map(order => {
+          if (order.orderId === updatedOrder.orderId) {
+            return updatedOrder;
+          }
+          return order;
+        });
+      });
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+
   return (
     <div>
-      <td className="border-t ">
+      <td className="border-t">
         <div className='ml-2'>
-      <div className="flex space-x-2 mr-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3  rounded-md">
-        Pending
-        </button>
-        <button className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md">
-        Completed
-        </button>
-        {/* <button className="bg-gray-400 hover:bg-gray-500 text-white py-1 px-3 rounded-md">
-          Order History
-        </button> */}
-      </div>
-      </div>
-    </td>
+          <div className="flex space-x-2 mr-4">
+            <button onClick={() => handleStatus('pending')} className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+              Pending
+            </button>
+            <button onClick={() => handleStatus('completed')} className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md">
+              Completed
+            </button>
+            <button onClick={()=>{fetchOrders()}} className="bg-gray-400 hover:bg-gray-500 text-white py-1 px-3 rounded-md">
+                      All Orders
+                    </button>
+          </div>
+        </div>
+      </td>
 
-    {/* order componets  */}
-    <div className="container mx-auto py-2 px-4 flex-100%">
+      {/* order components  */}
+      <div className="container mx-auto py-2 px-4 flex-100%">
         <div className="bg-white p-4">
           <h4 className="text-2xl font-bold">Orders</h4>
           <br />
@@ -65,6 +99,11 @@ const RecentOrders = () => {
                       <th className="px-4 py-2 text-left">Quantity</th>
                       <th className="px-4 py-2 text-left">Price</th>
                       <th className="px-4 py-2 text-left">Status</th>
+                      <td className="border-t">
+                            <button onClick={() => handleChangeStatus(orderId)} className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                              Change Status 
+                            </button>
+                          </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -75,6 +114,7 @@ const RecentOrders = () => {
                           <td className="border-t">{item.quantity}</td>
                           <td className="border-t">{item.price}</td>
                           <td className="border-t">{order.status}</td>
+                        
                         </tr>
                       ))
                     ))}
@@ -84,7 +124,8 @@ const RecentOrders = () => {
             ))}
           </div>
         </div>
-      </div></div>
+      </div>
+    </div>
   );
 };
 
