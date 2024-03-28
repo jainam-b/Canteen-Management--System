@@ -1,11 +1,16 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import Modal1 from './AddMembers'
 const TeamMember = () => {
+  
+  const [openModal,setOpenModal]=useState(false)
+  
+  
+  
   return (
     <div className="p-4 bg-white shadow rounded-md">
       <div className="flex items-center justify-between mb-2">
-      
-        <button className="bg-black text-white px-4 py-2 rounded">+ Add member</button>
+        <button className="bg-black text-white px-4 py-2 rounded" onClick={() => {setOpenModal(true);}} >+ Add member</button>
+          {openModal && <Modal1 closeModal={setOpenModal}/>}
       </div>
 
       <table className="w-full text-left border-collapse">
