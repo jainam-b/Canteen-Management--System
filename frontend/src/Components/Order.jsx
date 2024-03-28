@@ -36,17 +36,17 @@
 //                 </td>
 //                 <td className="border-t">Paid</td>
 //                 <td className="border-t">
-//                   <div className="flex space-x-2">
-//                     <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
-//                       Details
-//                     </button>
-//                     <button className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md">
-//                       Send SMS
-//                     </button>
-//                     <button className="bg-gray-400 hover:bg-gray-500 text-white py-1 px-3 rounded-md">
-//                       Order History
-//                     </button>
-//                   </div>
+                  <div className="flex space-x-2">
+                    <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                      Details
+                    </button>
+                    <button className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md">
+                      Send SMS
+                    </button>
+                    <button className="bg-gray-400 hover:bg-gray-500 text-white py-1 px-3 rounded-md">
+                      Order History
+                    </button>
+                  </div>
 //                 </td>
 //               </tr>
 //               {/* <!--- Add more rows based on the sample above --> */}

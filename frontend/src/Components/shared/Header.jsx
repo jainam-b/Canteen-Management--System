@@ -3,11 +3,10 @@ import { HiOutlineBell, HiOutlineChatAlt,HiOutlineSearch} from 'react-icons/hi'
 import { Popover,Transition,Menu } from '@headlessui/react'
 import classNames from 'classnames'
 // import { CgProfile } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   return (
-    <div className='bg-white h-14 px-5 flex justify-between items-center mr-2 '>
+    <div className='bg-white h-14 px-5 flex justify-between items-center w-100% '>
       <div className=' relative'>
         <p className='font-bold font-style-poppins '>Hello,</p>
       </div>
