@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   
   const handlenavigateHomepage = () => {
-    let path = `/`;
+    let path = `/dashboard`;
     navigate(path);
   };
   const handlenavigateSignup = () => {

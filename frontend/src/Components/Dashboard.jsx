@@ -12,7 +12,7 @@ export default function Dashboard(){
 		<div className="flex flex-row bg-neutral-100 h-screen overflow-hidden">
 		<Sidebar />
 		<div className="flex-1 overflow-y-auto">
-		  <Header />
+		  {/* <Header /> */}
 		  <div className="p-1">
 			  
 			<Outlet />
