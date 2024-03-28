@@ -28,7 +28,7 @@ const io = new Server(server, {
 app.use(bodyParser.json());
 app.use("/order", orderRouter)
 app.use("/user", userRouter)
-app.use("/status", filterRouter)
+app.use("/api", filterRouter)
 app.use("/menu", menuRouter)
 
 const PORT = 3001;
