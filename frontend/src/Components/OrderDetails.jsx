@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Outlet } from "react-router-dom"
+import Sidebar from './shared/Sidebar'
+import Header from './shared/Header'
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -65,6 +68,13 @@ const RecentOrders = () => {
   };
 
   return (
+    <div className="flex flex-row bg-neutral-100 h-screen overflow-hidden">
+    <Sidebar />
+      <div className="flex-1 overflow-y-auto">
+        <Header />
+     <div className="p-1">	  
+      < Outlet />
+    </div>
     <div>
       <td className="border-t">
         <div className='ml-2'>
@@ -125,6 +135,8 @@ const RecentOrders = () => {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

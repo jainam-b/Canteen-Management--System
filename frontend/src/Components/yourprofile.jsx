@@ -1,7 +1,17 @@
 import React from 'react';
+import { Outlet } from "react-router-dom"
+import Sidebar from './shared/Sidebar'
+import Header from './shared/Header'
 
 const AdminProfile = () => {
   return (
+    <div className="flex flex-row bg-neutral-100 h-screen overflow-hidden">
+    <Sidebar />
+    <div className="flex-1 overflow-y-auto">
+      <Header />
+    <div className="p-1">	  
+  < Outlet />
+  </div>
     <div className="p-8 bg-white shadow-lg max-w-3xl mx-auto rounded-md">
       <h2 className="text-2xl font-bold mb-6">Admin Profile</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -35,6 +45,8 @@ const AdminProfile = () => {
           Save Changes
         </button>
       </div>
+    </div>
+    </div>
     </div>
   );
 };
