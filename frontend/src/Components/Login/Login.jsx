@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Container, Typography, TextField, Button, Grid } from '@mui/material';
 import './login.css';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from './AuthContext';
 import { useNavigate } from "react-router-dom";
+
+
 const Login = () => {
   const { logIn } = useContext(AuthContext);
   const [email, setEmail] = useState('');
