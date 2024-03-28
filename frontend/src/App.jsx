@@ -13,11 +13,12 @@ import TeamMembers from "./Components/Members"
 // import Signup from "./Components/Signup/Signup";
 // import { ModalProvider } from "./Components/Context/ModalContext";
 import AdminProfile from './Components/yourprofile'
-
+import { ProductProvider } from './Components/ViewDetailModal/DetailContext';
 
 
 function App(){
   return(
+    <ProductProvider>
     <BrowserRouter>
       <Routes>
           <Route path='try' element={<Try/>} />
@@ -33,6 +34,7 @@ function App(){
         </Route>
     </Routes>
   </BrowserRouter>
+  </ProductProvider>
   )
 }
     

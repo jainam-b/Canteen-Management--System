@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useProductContext } from './ViewDetailModal/DetailContext';
+import ViewDetailModal from './ViewDetailModal/ViewDetailModal';
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const { setProductDetails } = useProductContext(); // Access setProductDetails from ProductContext
 
   useEffect(() => {
     fetchOrders();
@@ -20,15 +24,10 @@ const RecentOrders = () => {
   };
 
   const handleViewDetails = async (orderId) => {
+    setOpenModal(true);
     try {
       const response = await axios.get(`http://localhost:3001/api/order/${orderId}`);
-      const orderDetails = response.data;
-      console.log("Order Details:");
-      orderDetails.items.forEach(item => {
-        console.log("Name:", item.itemId.name);
-        console.log("Price:", item.itemId.price);
-        console.log("Quantity:", item.quantity);
-      });
+      setProductDetails(response.data); // Update productDetails in ProductContext with selected order details
     } catch (error) {
       console.error('Error fetching order details:', error);
     }
@@ -64,7 +63,7 @@ const RecentOrders = () => {
                   <td className="border-t">{order.totalPrice}</td>
                   <td className="border-t">
                     <button onClick={() => handleViewDetails(order.orderId)} className="bg-green-500 hover:bg-green-600 mt-2 text-white py-1 px-3 rounded-md">
-                      View Details
+                      View Details 
                     </button>
                   </td>
                 </tr>
@@ -73,6 +72,7 @@ const RecentOrders = () => {
           </table>
         </div>
       </div>
+      {openModal && <ViewDetailModal closeModal={() => setOpenModal(false)} />}
     </div>
   );
 };
