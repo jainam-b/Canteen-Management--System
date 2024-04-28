@@ -139,7 +139,7 @@ router.get("/orders", async (req, res) => {
     const orders = await Order.find();
     res.json(orders);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 });
 

@@ -7,7 +7,7 @@ const userMiddleware = require("../middlewares/user");
 router.get("/:status", async (req, res) => {
     try {
         const status=req.params.status
-        // console.log(status);
+           // console.log(status);
         const pendingOrders = await Order.find({ status: status });
         res.json(pendingOrders);
     } catch (error) {

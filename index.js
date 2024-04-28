@@ -5,6 +5,9 @@ const orderRouter = require("./routes/order")
 const userRouter = require("./routes/user");
 const filterRouter = require("./routes/filter");
 const   JWT_SECRET   = process.env.JWT_SECRET
+const cors=require("cors")
+app.use(express.json())
+app.use(cors())
 
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
