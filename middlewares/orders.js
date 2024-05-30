@@ -2,6 +2,7 @@ const { JWT_SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
 function userMiddleware(req, res, next) {
   // accessing token from headers and verifying using secret and sending to the route
+  // testing commit 
   const token = req.headers.authorization;
   const words = token.split(" ");
   const jwtToken = words[1];
